@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Formación CAB</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #e9ecef;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 10px;
+    }
+
+    #field {
+      position: relative;
+      background: url('1137.jpg') center/cover no-repeat;
+      width: 360px;
+      height: 540px;
+      border: 3px solid #fff;
+      border-radius: 10px;
+      margin: 10px 0;
+      page-break-inside: avoid;
+    }
+
+    .player-container {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 60px;
+      cursor: move;
+    }
+
+    .player {
+      width: 60px;
+      height: 70px;
+      background: url('camiseta.png') center/contain no-repeat;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+    }
+
+    .player-number {
+  font-weight: bold;
+  color: black;
+  font-size: 14px;
+  margin-bottom: 30px; /* sube el número unos píxeles */
+    }
+
+
+    .player-name {
+      font-size: 10px;
+      font-weight: bold;
+      color: black;
+      background: rgba(255,255,255,0.7);
+      padding: 1px 3px;
+      border-radius: 3px;
+      margin-top: 2px;
+      text-align: center;
+      width: 100%;
+    }
+
+    #bench {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+        margin-top: 10px;
+        background: rgba(255, 255, 255, 0.8);
+        border: 2px dashed #666;
+        border-radius: 8px;
+        padding: 10px;
+        width: 360px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    #bench .player-container {
+        position: relative; /* que no interfiera con el campo */
+        flex: 0 0 auto;      /* evita que se estiren */
+    }
+
+    button, input, select {
+      margin: 5px;
+      padding: 6px 10px;
+      font-size: 14px;
+    }
+
+    @media print {
+      form, select, button, h3, #loadFile {
+        display: none !important;
+      }
+
+      body {
+        background: white;
+      }
+
+      #field {
+        background: url('1137.jpg') center/cover no-repeat !important;
+      }
+
+      .player {
+        background: url('camiseta.png') center/contain no-repeat !important;
+      }
+
+      .player-container {
+        page-break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<h2>CLUB ATLÉTICO BELGRANO</h2>
+<h3>Formación del Partido</h3>
+
+<form id="playerForm">
+  <input type="text" id="name" placeholder="Nombre" required />
+  <input type="number" id="number" placeholder="N°" required />
+  <select id="position">
+    <option value="titular">Titular</option>
+    <option value="suplente">Suplente</option>
+  </select>
+  <button type="submit">Agregar</button>
+</form>
+
+<div>
+  <select id="formationSelect">
+    <option value="4-4-2">4-4-2</option>
+    <option value="4-3-3">4-3-3</option>
+    <option value="3-5-2">3-5-2</option>
+  </select>
+  <button onclick="applyFormation()">Aplicar Formación</button>
+  <button onclick="saveFormation()">Guardar</button>
+  <button onclick="loadFormation()">Cargar</button>
+  <button onclick="window.print()">Imprimir</button>
+  <button onclick="sendWhatsApp()">WhatsApp</button>
+  <input type="file" id="loadFile" style="display:none" />
+</div>
+
+<div id="field"></div>
+
+<h3>Suplentes</h3>
+<div id="bench"></div>
+
+<script>
+  const field = document.getElementById("field");
+  const bench = document.getElementById("bench");
+  const form = document.getElementById("playerForm");
+  const formationSelect = document.getElementById("formationSelect");
+  const loadFile = document.getElementById("loadFile");
+
+  let players = [];
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    const name = document.getElementById("name").value;
+    const number = document.getElementById("number").value;
+    const position = document.getElementById("position").value;
+
+    const playerData = {
+      name,
+      number,
+      x: 0,
+      y: 0,
+      position
+    };
+
+    players.push(playerData);
+    renderPlayers();
+    form.reset();
+  });
+
+  function renderPlayers() {
+    field.innerHTML = "";
+    bench.innerHTML = "";
+
+    players.forEach((player) => {
+      const container = document.createElement("div");
+      container.className = "player-container";
+
+      const camiseta = document.createElement("div");
+      camiseta.className = "player";
+      const number = document.createElement("div");
+      number.className = "player-number";
+      number.textContent = player.number;
+      camiseta.appendChild(number);
+
+      const name = document.createElement("div");
+      name.className = "player-name";
+      name.contentEditable = true;
+      name.textContent = player.name;
+      name.addEventListener("input", () => {
+        player.name = name.textContent;
+      });
+
+      container.appendChild(camiseta);
+      container.appendChild(name);
+
+      if (player.position === 'titular') {
+        container.style.left = player.x + "px";
+        container.style.top = player.y + "px";
+        makeDraggable(container, player);
+        field.appendChild(container);
+      } else {
+        bench.appendChild(container);
+      }
+    });
+  }
+
+  function makeDraggable(el, playerData) {
+    let isDragging = false, offsetX, offsetY;
+
+    el.addEventListener("mousedown", (e) => {
+      isDragging = true;
+      offsetX = e.offsetX;
+      offsetY = e.offsetY;
+    });
+
+    document.addEventListener("mousemove", (e) => {
+      if (isDragging) {
+        const rect = field.getBoundingClientRect();
+        let x = e.clientX - rect.left - offsetX;
+        let y = e.clientY - rect.top - offsetY;
+
+        x = Math.max(0, Math.min(x, rect.width - el.offsetWidth));
+        y = Math.max(0, Math.min(y, rect.height - el.offsetHeight));
+
+        el.style.left = x + "px";
+        el.style.top = y + "px";
+        playerData.x = x;
+        playerData.y = y;
+      }
+    });
+
+    document.addEventListener("mouseup", () => {
+      isDragging = false;
+    });
+  }
+
+  function applyFormation() {
+    const formation = formationSelect.value;
+    const titulares = players.filter(p => p.position === 'titular');
+    if (titulares.length === 0) return;
+
+    const [def, mid, att] = formation.split("-").map(n => parseInt(n));
+    const formationLines = [
+      { count: def, y: 400 },
+      { count: mid, y: 260 },
+      { count: att, y: 120 },
+    ];
+
+    let i = 0;
+    formationLines.forEach(line => {
+      const spacing = 360 / (line.count + 1);
+      for (let j = 0; j < line.count && i < titulares.length; j++, i++) {
+        const player = titulares[i];
+        player.x = spacing * (j + 1) - 30;
+        player.y = line.y;
+      }
+    });
+
+    renderPlayers();
+  }
+
+  function saveFormation() {
+    const blob = new Blob([JSON.stringify(players)], { type: "application/json" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "formacion.json";
+    a.click();
+  }
+
+  function loadFormation() {
+    loadFile.click();
+  }
+
+  loadFile.addEventListener("change", function (e) {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      players = JSON.parse(e.target.result);
+      renderPlayers();
+    };
+    reader.readAsText(file);
+  });
+
+  function sendWhatsApp() {
+    let text = "*Formación CAB*\n\n*TITULARES:*\n";
+    const titulares = players.filter(p => p.position === "titular");
+    titulares.forEach(p => {
+      text += `• ${p.number} - ${p.name}\n`;
+    });
+
+    text += "\n*SUPLENTES:*\n";
+    const suplentes = players.filter(p => p.position === "suplente");
+    suplentes.forEach(p => {
+      text += `• ${p.number} - ${p.name}\n`;
+    });
+
+    const url = "https://wa.me/?text=" + encodeURIComponent(text);
+    window.open(url, "_blank");
+  }
+</script>
+
+</body>
+</html>
