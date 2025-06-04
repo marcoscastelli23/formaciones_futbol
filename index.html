@@ -1,32 +1,40 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Formación CAB</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #e9ecef;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 10px;
-    }
+      body {
+        font-family: Arial, sans-serif;
+        background: #e9ecef;
+        background-image: url('AFA.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
 
-    #field {
-      position: relative;
-      background: url('1137.jpg') center/cover no-repeat;
-      width: 360px;
-      height: 540px;
-      border: 3px solid #fff;
-      border-radius: 10px;
-      margin: 10px 0;
-      page-break-inside: avoid;
-    }
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 10px;
 
-    .player-container {
-      position: absolute;
+     }
+
+      
+      #field {
+        position: relative;
+        background: url('1137.jpg') center/cover no-repeat;
+        width: 360px;
+        height: 540px;
+        border: 3px solid #fff;
+        border-radius: 10px;
+        margin: 10px 0;
+        page-break-inside: avoid;
+      }
+
+      .player-container {
+        position: absolute;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -45,10 +53,10 @@
     }
 
     .player-number {
-  font-weight: bold;
-  color: black;
-  font-size: 14px;
-  margin-bottom: 30px; /* sube el número unos píxeles */
+      font-weight: bold;
+      color: black;
+      font-size: 14px;
+      margin-bottom: 30px; /* sube el número unos píxeles */
     }
 
 
@@ -74,7 +82,7 @@
         border: 2px dashed #666;
         border-radius: 8px;
         padding: 10px;
-        width: 360px;
+        width: 450px;
         box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
 
@@ -88,36 +96,203 @@
       padding: 6px 10px;
       font-size: 14px;
     }
+    
+    #banco-tecnico {
+       margin-top: 1rem;
+       padding: 1rem;
+       background-color: #f2f2f2;
+       border-radius: 12px;
+       max-width: 300px;
+       font-family: sans-serif;
+     }
+
 
     @media print {
-      form, select, button, h3, #loadFile {
+      form, select, button, #loadFile {
         display: none !important;
       }
-
+        
       body {
-        background: white;
-      }
+        background-image: url('AFA.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        -webkit-print-color-adjust: exact; /* Importante para que el fondo se imprima */
+        print-color-adjust: exact;
+        }
 
+  
+
+   
+      .event-form {
+            display: none !important;
+        }
+     
       #field {
-        background: url('1137.jpg') center/cover no-repeat !important;
-      }
+            background: url('1137.jpg') center/cover no-repeat !important;
+        }
 
       .player {
         background: url('camiseta.png') center/contain no-repeat !important;
-      }
+        }
 
       .player-container {
         page-break-inside: avoid;
-      }
+        }
+
     }
+
+    #selector-categoria {
+        min-width: 200px;
+        padding: 10px;
+        background-color: #f5f5f5;
+        border-radius: 8px;
+   }
   </style>
 </head>
 <body>
 
-<h2>CLUB ATLÉTICO BELGRANO</h2>
-<h3>Formación del Partido</h3>
+<h2></h2>
+
+<div id="eventData"><h3></h3></div>
+
+<div class="event-form">
+    <label> 
+        <select id="categoriaSelect">
+            <option value="">Seleccione Categoría</option>
+            <option value="Reserva">Reserva</option>
+            <option value="Cuarta">Cuarta</option>
+            <option value="Quinta">Quinta</option>
+            <option value="Sexta">Sexta</option>
+            <option value="Septima">Septima</option>
+            <option value="Octava">Octava</option>
+            <option value="Novena">Novena</option>
+        </select>
+    </label>
+    
+    <label>
+        <select id="NFecha">
+            <option value="">Seleccione N° Fecha</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>    
+        </select>
+        <label><input type="date" id="fechaEncuentro"></label>
+        <select id="rivalSelect">
+            <option value="">Seleccione Rival</option>
+            <option value="Aldosivi">Aldosivi</option>
+            <option value="Argentinos">Argentinos</option>
+            <option value="Atl Tucuman">Atl Tucuman</option>
+            <option value="Banfield">Banfield</option>
+            <option value="Barracas Central">Barracas Central</option>
+            <option value="Boca Juniors">Boca Juniors</option>
+            <option value="Central Cba (SdE)">Central Cba (SdE)</option>
+            <option value="Colon">Colon</option>
+            <option value="Def y Justicia">Def y Justicia</option>
+            <option value="Estudiantes (LP)">Estudiantes (LP)</option>
+            <option value="Ferro">Ferro</option>
+            <option value="Gimnasia (LP)">Gimnasia (LP)</option>
+            <option value="Godoy Cruz">Godoy Cruz</option>
+            <option value="Huracan">Huracan</option>
+            <option value="Ind Rivadavia">Ind Rivadavia</option>
+            <option value="Independiente">Independiente</option>
+            <option value="Indepte Mza">Indepte Mza</option>
+            <option value="Instituto">Instituto</option>
+            <option value="Lanus">Lanus</option>
+            <option value="Newells">Newells</option>
+            <option value="Platense">Platense</option>
+            <option value="Racing Club">Racing Club</option>
+            <option value="Riestra">Riestra</option>
+            <option value="River Plate">River Plate</option>
+            <option value="Rosario Central">Rosario Central</option>
+            <option value="San Lorenzo">San Lorenzo</option>
+            <option value="Sarmiento (J)">Sarmiento (J)</option>
+            <option value="Talleres (C)">Talleres (C)</option>
+            <option value="Tigre">Tigre</option>
+            <option value="Union">Union</option>
+            <option value="Velez">Velez</option>
+        </select>
+    </label>
+    <label> 
+        <select id="formationSelect1">
+            <option value="">Seleccionar Formación</option>
+            <option value="4-4-2">4-4-2</option>
+            <option value="4-4-1-1">4-4-1-1</option>
+            <option value="4-3-1-2">4-3-1-2</option>
+            <option value="4-1-3-2">4-1-3-2</option>
+            <option value="4-3-3">4-3-3</option>
+            <option value="4-1-4-1">4-1-4-1</option>
+            <option value="4-2-3-1">4-2-3-1</option>
+            <option value="3-4-1-2">3-4-1-2</option>
+            <option value="3-4-3">3-4-3</option>
+            <option value="3-5-2">3-5-2</option>
+            <option value="5-3-2">5-3-2</option>
+        </select>
+    </label>
+
+    <button type="button" id="guardarEvento">Guardar Evento</button>
+</div>
+
+
+
+
+
+<script>
+    const formationSelect1 = document.getElementById('formationSelect1');
+    const guardarEvento = document.getElementById('guardarEvento');
+
+    const categoriaSelect = document.getElementById('categoriaSelect');
+    const dtInput = document.getElementById('dt');
+    const pfInput = document.getElementById('pf');
+    const acInput = document.getElementById('ac');
+
+
+
+    guardarEvento.addEventListener("click", function() {
+        const categoria = categoriaSelect.value;
+        
+        const NFecha = document.getElementById("NFecha").value;
+        const rival = document.getElementById("rivalSelect").value;
+        const fechaEncuentroRaw = document.getElementById("fechaEncuentro").value;
+        const formacion = formationSelect.value;
+
+        let fechaFormateada = "";
+        if (fechaEncuentroRaw) {
+        const partes = fechaEncuentroRaw.split("-");
+        fechaFormateada = `${partes[2]}/${partes[1]}/${partes[0]}`;
+        }  
+
+        const datosHTML = `
+        <div style="display: flex; justify-content: space-between; margin-top: 30px; gap: 20px;">
+          <div style="text-align: left;font-weight: bold; margin-top: 40px;">
+           <p>Fecha N°: ${NFecha}</p>
+           </div>
+          <div style="text-align: left;font-weight: bold; margin-top: 40px;"> 
+           <p>Día: ${fechaFormateada}</p>
+           </div>
+          <div style="text-align: left;font-weight: bold; margin-top: 40px;">  
+           <p>Categoría: ${categoria}</p>
+           </div>
+          <div style="text-align: left;font-weight: bold; margin-top: 40px;">   
+           <p>Rival: ${rival}</p>
+           </div>
+
+        </div>
+`;
+
+        document.getElementById("eventData").innerHTML = datosHTML;
+    });
+
+
+ 
+</script>
+
+
 
 <form id="playerForm">
+  <h3 style="text-align: center;">Formación del Partido</h3>
   <input type="text" id="name" placeholder="Nombre" required />
   <input type="number" id="number" placeholder="N°" required />
   <select id="position">
@@ -125,6 +300,7 @@
     <option value="suplente">Suplente</option>
   </select>
   <button type="submit">Agregar</button>
+  <button onclick="resetPositions()">Resetear Posiciones</button>
 </form>
 
 <div>
@@ -141,7 +317,34 @@
   <input type="file" id="loadFile" style="display:none" />
 </div>
 
-<div id="field"></div>
+
+
+<div style="display: flex; gap: 60px; align-items: flex-start;">
+  
+  <div id="field"; style="margin-top: 80px;"></div>
+  
+
+  
+  <!-- Banco técnico -->
+  <div id="banco-tecnico"; style="margin-top: 80px;">
+      <!-- Selector de categoría -->
+   <select id="categoria" onchange="actualizarCuerpoTecnico()">
+    <option value="">Cuerpo Técnico</option>
+    <option value="reserva">Reserva</option>
+    <option value="cuarta">Cuarta</option>
+    <option value="quinta">Quinta</option>
+    <option value="sexta">Sexta</option>
+    <option value="septima">Séptima</option>
+    <option value="octava">Octava</option>
+    <option value="novena">Novena</option>
+  </select>
+
+    <label><h3>Cuerpo Técnico</h3></label>
+    <p><strong>DT:</strong> <span id="dt"></span></p>
+    <p><strong>AC:</strong> <span id="ac"></span></p>
+    <p><strong>PF:</strong> <span id="pf"></span></p>
+  </div>
+</div>
 
 <h3>Suplentes</h3>
 <div id="bench"></div>
@@ -155,29 +358,52 @@
 
   let players = [];
 
-  form.addEventListener("submit", function (e) {
-    e.preventDefault();
-    const name = document.getElementById("name").value;
-    const number = document.getElementById("number").value;
-    const position = document.getElementById("position").value;
+form.addEventListener("submit", function (e) {
+  e.preventDefault();
+  const name = document.getElementById("name").value;
+  const number = document.getElementById("number").value;
+  const position = document.getElementById("position").value;
 
-    const playerData = {
-      name,
-      number,
-      x: 0,
-      y: 0,
-      position
-    };
+  if (position === "titular") {
+    const titulares = players.filter(p => p.position === "titular");
+    if (titulares.length >= 11) {
+      alert("Solo se permiten 11 jugadores titulares en cancha.");
+      return;
+    }
+  }
+  
+  if (position === "suplente") {
+  const suplentes = players.filter(p => p.position === "suplente");
+  if (suplentes.length >= 6) {
+    alert("Solo se permiten 6 suplentes.");
+    return;
+  }
+  }
 
-    players.push(playerData);
-    renderPlayers();
-    form.reset();
-  });
+  const playerData = {
+    name,
+    number,
+    x: 0,
+    y: 0,
+    position
+  };
+
+const alreadyExists = players.some(p => p.number === number);
+if (alreadyExists) {
+  alert("Ya hay un jugador con ese número de camiseta.");
+  return;
+}
+
+  players.push(playerData);
+  renderPlayers();
+  form.reset();
+});
+
 
   function renderPlayers() {
     field.innerHTML = "";
     bench.innerHTML = "";
-
+    
     players.forEach((player) => {
       const container = document.createElement("div");
       container.className = "player-container";
@@ -200,6 +426,14 @@
       container.appendChild(camiseta);
       container.appendChild(name);
 
+      const deleteBtn = document.createElement("button");
+      deleteBtn.textContent = "";
+      deleteBtn.style.marginRight = "0px";
+      deleteBtn.onclick = () => {
+      players = players.filter(p => p !== player);
+    renderPlayers();
+};
+container.appendChild(deleteBtn);
       if (player.position === 'titular') {
         container.style.left = player.x + "px";
         container.style.top = player.y + "px";
@@ -242,29 +476,41 @@
   }
 
   function applyFormation() {
-    const formation = formationSelect.value;
-    const titulares = players.filter(p => p.position === 'titular');
-    if (titulares.length === 0) return;
+  const formation = formationSelect.value;
+  const titulares = players.filter(p => p.position === 'titular');
 
-    const [def, mid, att] = formation.split("-").map(n => parseInt(n));
-    const formationLines = [
-      { count: def, y: 400 },
-      { count: mid, y: 260 },
-      { count: att, y: 120 },
-    ];
+  if (titulares.length === 0) return;
 
-    let i = 0;
-    formationLines.forEach(line => {
-      const spacing = 360 / (line.count + 1);
-      for (let j = 0; j < line.count && i < titulares.length; j++, i++) {
-        const player = titulares[i];
-        player.x = spacing * (j + 1) - 30;
-        player.y = line.y;
-      }
-    });
 
-    renderPlayers();
+  const [def, mid, att] = formation.split("-").map(n => parseInt(n));
+  const total = 1 + def + mid + att;
+
+  if (titulares.length < total) {
+    alert(`Faltan jugadores para completar la formación ${formation} + arquero.`);
+    return;
   }
+
+  // Distribución de líneas (de abajo hacia arriba)
+  const lines = [
+    { count: 1, y: 440 },         // Arquero
+    { count: def, y: 360 },       // Defensores
+    { count: mid, y: 220 },       // Mediocampistas
+    { count: att, y: 80 }        // Delanteros
+  ];
+
+  let i = 0;
+  lines.forEach(line => {
+    const spacing = 360 / (line.count + 1);
+    for (let j = 0; j < line.count && i < titulares.length; j++, i++) {
+      const player = titulares[i];
+      player.x = spacing * (j + 1) - 30;
+      player.y = line.y;
+    }
+  });
+
+  renderPlayers();
+}
+
 
   function saveFormation() {
     const blob = new Blob([JSON.stringify(players)], { type: "application/json" });
@@ -306,7 +552,48 @@
     const url = "https://wa.me/?text=" + encodeURIComponent(text);
     window.open(url, "_blank");
   }
+  function resetPositions() {
+  players.forEach(p => {
+    if (p.position === 'titular') {
+      p.x = 0;
+      p.y = 0;
+    }
+  });
+  renderPlayers();
+ }
+ 
+  players[index].position = newStatus;
+  renderPlayers();
+
 </script>
+
+<script>
+  const cuerpoTecnicoPorCategoria = {
+    reserva: { dt: "Carlos Gómez", ac: "Luis Pérez", pf: "Andrés Ramírez" },
+    cuarta: { dt: "Martín Ruiz", ac: "Javier Acosta", pf: "Diego López" },
+    quinta: { dt: "Sebastián Torres", ac: "Emilio Díaz", pf: "Lucas Fernández" },
+    sexta: { dt: "Fernando Sosa", ac: "Pablo Molina", pf: "Maxi Cabrera" },
+    septima: { dt: "Gabriel Gómez", ac: "Oscar Valle", pf: "Matías Duarte" },
+    octava: { dt: "Rubén Silva", ac: "Nicolás Ríos", pf: "Ramiro Alonso" },
+    novena: { dt: "Alejandro Varela", ac: "Iván Salas", pf: "Franco Medina" },
+  };
+
+  function actualizarCuerpoTecnico() {
+    const categoria = document.getElementById("categoria").value;
+    const tecnico = cuerpoTecnicoPorCategoria[categoria];
+
+    if (tecnico) {
+      document.getElementById("dt").textContent = tecnico.dt;
+      document.getElementById("ac").textContent = tecnico.ac;
+      document.getElementById("pf").textContent = tecnico.pf;
+    } else {
+      document.getElementById("dt").textContent = "";
+      document.getElementById("ac").textContent = "";
+      document.getElementById("pf").textContent = "";
+    }
+  }
+</script>
+
 
 </body>
 </html>
